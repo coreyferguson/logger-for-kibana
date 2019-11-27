@@ -1,5 +1,10 @@
+import stub from './stub';
 
 class Logger {
+
+  constructor() {
+    this.stub = stub;
+  }
 
   tid(tid) {
     this._tid = tid;
