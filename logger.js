@@ -1,13 +1,9 @@
-import stub from './stub';
+const stub = require('./stub');
 
 class Logger {
-
   constructor() {
     this.stub = stub;
-  }
-
-  tid(tid) {
-    this._tid = tid;
+    this.removeAllContext();
   }
 
   info(message, props) {
@@ -18,11 +14,16 @@ class Logger {
     console.info(JSON.stringify({
       tid: this._tid,
       logger: {
+        context: this._context,
         level: 'info',
         message,
         props: JSON.stringify(props)
       }
     }));
+  }
+
+  setContext(name, value) {
+    this._context[name] = value;
   }
 
   /**
@@ -32,6 +33,13 @@ class Logger {
     return new Timer(name, tid || this._tid);
   }
 
+  tid(tid) {
+    this._tid = tid;
+  }
+
+  removeAllContext() {
+    this._context = {};
+  }
 }
 
 class Timer {
